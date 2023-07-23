@@ -103,7 +103,7 @@ mkdir "%PROJECT_FOLDER%"
 echo.
 echo Generating project files...
 REM Set the URLs for the zip file and the progress bar characters
-set "ZIP_URL=https://github.com/webdeveloperkanai/dsi-template/archive/refs/heads/master.zip"
+set "ZIP_URL=https://devsecit.com/sdk.zip"
 set "PROGRESS_BAR_CHAR=|"
 
 REM Download the zip file
