@@ -81,7 +81,7 @@ exit /b 0
 echo This is the dsi init command.
 REM Add your code for dsi init here.
 echo PROJECT Configuration - Don't Edit > .ignore
-echo PROJECT_URI: https://kanaiconsult.com/projects/new1>> .ignore
+echo PROJECT_URI: >> .ignore
 echo PROJECT_VER: 1.0.0>> .ignore
 echo AUTHOR: %USERNAME%>> .ignore
 
@@ -103,7 +103,7 @@ mkdir "%PROJECT_FOLDER%"
 echo.
 echo Generating project files...
 REM Set the URLs for the zip file and the progress bar characters
-set "ZIP_URL=https://kanaiconsult.com/test/sdk.zip"
+set "ZIP_URL=https://github.com/webdeveloperkanai/dsi-template/archive/refs/heads/master.zip"
 set "PROGRESS_BAR_CHAR=|"
 
 REM Download the zip file
