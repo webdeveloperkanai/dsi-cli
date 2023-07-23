@@ -3,6 +3,9 @@
 ## Configuration 
 Put this sdk file into c:\dsi folder. Then add to environmental variable c:\dsi\ 
 
+Setup guide - 
+https://youtu.be/SZtC5WFrK50
+
 ### dsi init 
 
 ### dsi config 
