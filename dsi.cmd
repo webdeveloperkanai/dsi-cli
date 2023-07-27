@@ -54,12 +54,72 @@ if /i "%COMMAND%"=="init" (
     call :stop
 ) else if /i "%COMMAND%"=="deploy" (
     call :deploy
+) else if /i "%COMMAND%"=="api" (
+    if "%~2"=="" (
+        echo Usage: dsi push BRANCH_NAME
+        exit /b 1
+    )
+    call :dsi_api "%~2"
 ) else (
     echo Invalid command: %COMMAND%
     exit /b 1
 )
 
 exit /b 0
+
+
+:dsi_api
+REM downloading and creating api folder
+set "PROJECT_NAME=%~1"
+set "PROJECT_FOLDER=%cd%\%PROJECT_NAME%"
+
+REM Check if the project folder already exists
+if exist "%PROJECT_FOLDER%" (
+    echo The project folder "%PROJECT_NAME%" already exists in the current directory.
+    exit /b 1
+)
+
+REM Create the project folder
+mkdir "%PROJECT_FOLDER%"
+echo.
+echo Generating project files...
+REM Set the URLs for the zip file and the progress bar characters
+set "ZIP_URL=https://devsecit.com/sdk-api.zip"
+set "PROGRESS_BAR_CHAR=|"
+
+REM Download the zip file
+@REM echo Downloading %ZIP_URL% ...
+curl --progress-bar -o "%PROJECT_FOLDER%\downloaded_file.zip" %ZIP_URL%
+
+REM Extract the zip file and calculate the total number of files to extract
+set "TOTAL_FILES=0"
+for /f %%F in ('7z l "%PROJECT_FOLDER%\downloaded_file.zip" ^| find /c /v ""') do set "TOTAL_FILES=%%F"
+
+REM Extract the zip file with progress
+echo Extracting...
+7z x "%PROJECT_FOLDER%\downloaded_file.zip" -o"%PROJECT_FOLDER%" -y | find /v /c ""
+set "EXTRACTED_FILES=0"
+
+REM Show downloading and extracting percentages
+echo.
+for /L %%P in (1,1,%TOTAL_FILES%) do (
+    set /a "EXTRACTED_FILES=%%P * 100 / %TOTAL_FILES%"
+    set "PROGRESS="
+    for /L %%C in (1,1,50) do if %%C LEQ !EXTRACTED_FILES! (set "PROGRESS=!PROGRESS!%PROGRESS_BAR_CHAR%") else (set "PROGRESS=!PROGRESS! ")
+    echo Downloading: !EXTRACTED_FILES!%% [!PROGRESS!]
+    @REM timeout 1 >nul
+)
+
+REM Delete the downloaded zip file
+del "%PROJECT_FOLDER%\downloaded_file.zip"
+
+echo.
+echo Project "%PROJECT_NAME%" has been created successfully! 
+echo cd "%PROJECT_NAME%" 
+echo dsi serve 
+echo Happy Coding! 
+exit /b 0
+
 
 :configure
 

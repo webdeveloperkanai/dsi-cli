@@ -16,6 +16,7 @@ https://youtu.be/SZtC5WFrK50
 
 ### dsi deploy
 
+### dsi api project_name
 
 #### Change logs
 
